@@ -14,5 +14,23 @@ services:
     ports:
       - "5432:5432"
 
+  moodle:
+    build: ./moodle
+    container_name: moodle
+    restart: always
+    depends_on:
+      - postgres
+    environment:
+      MOODLE_DATABASE_TYPE: pgsql
+      MOODLE_DATABASE_HOST: postgres
+      MOODLE_DATABASE_PORT_NUMBER: 5432
+      MOODLE_DATABASE_USER: moodle
+      MOODLE_DATABASE_PASSWORD: moodlepassword
+      MOODLE_DATABASE_NAME: moodledb
+    ports:
+      - "8080:80"
+    volumes:
+      - ./moodle:/var/www/html
+
 volumes:
   postgres_data:
